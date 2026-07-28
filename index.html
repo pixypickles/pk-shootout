@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#101d32"><title>PK合戦 Firebase通信試作 α v012</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#101d32"><title>PK合戦 Firebase通信試作 α v015</title><style>
 *{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#06101c;color:#fff;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;touch-action:none}body{display:grid;place-items:center}#app{position:relative;width:min(100vw,calc(100vh * 1.5));height:min(100vh,calc(100vw / 1.5));background:#081526;overflow:hidden;box-shadow:0 0 50px #000}canvas{position:absolute;inset:0;width:100%;height:80%;background:#173c31}#menu{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(#071727e8,#050d18f4);padding:12px;z-index:5}.card{width:min(760px,96%);max-height:96%;overflow:auto;padding:20px 22px;text-align:center;border:1px solid #ffffff30;border-radius:24px;background:#0d1c2cef;box-shadow:0 18px 70px #000a}.eyebrow{font-size:12px;letter-spacing:.28em;color:#8ddcff;font-weight:900}.card h1{font-size:clamp(34px,7vw,62px);margin:4px 0 8px;line-height:1;text-shadow:0 5px 0 #073952}.card p{line-height:1.55;color:#d9edf4;margin:10px auto;max-width:620px}.team-select{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0}.team-card{border:2px solid #ffffff28;border-radius:13px;background:#ffffff0c;color:#fff;padding:6px 4px;min-width:0}.team-card img{display:block;width:100%;height:68px;object-fit:contain;filter:drop-shadow(0 5px 5px #0008)}.team-card span{display:block;font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.team-card.selected{border-color:#ffe16a;background:#ffe16a20;box-shadow:0 0 0 2px #ffe16a44 inset}#startButton{border:0;border-radius:999px;padding:12px 48px;font-size:21px;font-weight:900;color:#07202e;background:linear-gradient(#fff48c,#ffbe3d);box-shadow:0 7px 0 #b96b15}#startButton:disabled{filter:grayscale(.8);opacity:.55}.guide{margin-top:13px;font-size:12px;color:#a9c1cd}.loading{display:none!important}#touchUi{position:absolute;left:0;right:0;top:80%;bottom:0;background:linear-gradient(#0b2030,#07111e);border-top:2px solid #ffffff24;z-index:4}.dpad{position:absolute;left:7%;top:50%;transform:translateY(-50%);width:86px;height:130px}.dir{position:absolute;left:9px;width:68px;height:58px;border-radius:15px;border:3px solid #ffffff88;background:#ffffff18;color:#fff;font-size:30px;font-weight:900}.dir.up{top:0}.dir.down{bottom:0}.action{position:absolute;right:9%;top:50%;transform:translateY(-50%);width:102px;height:102px;border-radius:50%;border:4px solid #ffffffaa;background:#d7423e;color:#fff;box-shadow:0 8px 18px #0008;font-weight:900}.action b{display:block;font-size:34px;line-height:1}.action span{font-size:12px}.pressed{filter:brightness(1.35);transform:translateY(-50%) scale(.93)}.dir.pressed{transform:scale(.93)}@media(max-height:540px){.card{padding:10px 14px}.card h1{font-size:34px}.team-card img{height:44px}.team-select{margin:6px 0}.card p{font-size:12px;margin:5px auto}.guide{margin-top:7px}.dpad{transform:translateY(-50%) scale(.8);transform-origin:left center}.action{transform:translateY(-50%) scale(.8);transform-origin:right center}}
 
 .prototype-badge{display:inline-block;margin-left:8px;padding:4px 9px;border-radius:999px;background:#ff5c70;color:#fff;font-size:12px;font-weight:1000;vertical-align:middle;box-shadow:0 3px 0 #8b1d31}.mode-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0}.subButton{border:1px solid #8ddcff88;border-radius:999px;padding:10px 18px;background:#0c3148;color:#fff;font-weight:900;font-size:15px}.subButton.hot{background:linear-gradient(#68d8ff,#2689bd);color:#061621;border:0;box-shadow:0 5px 0 #0d567c}.proto-note{font-size:11px;color:#ffd68a;margin-top:6px}.online-panel{display:none;margin:12px auto 0;padding:14px;border-radius:18px;background:#061523;border:1px solid #ffffff25;max-width:610px}.online-panel.open{display:block}.online-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:12px}.online-tabs button{border:0;border-radius:999px;padding:8px 18px;background:#ffffff16;color:#fff;font-weight:900}.online-tabs button.active{background:#ffe16a;color:#172230}.room-box{display:none}.room-box.active{display:block}.room-code{font-size:38px;font-weight:1000;letter-spacing:.18em;color:#ffe16a;margin:5px 0}.qr-wrap{display:inline-block;background:#fff;padding:9px;border-radius:14px}.qr-wrap img{display:block;width:170px;height:170px;image-rendering:pixelated}.join-row{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}.join-row input{width:205px;padding:12px 14px;border-radius:12px;border:2px solid #ffffff44;background:#fff;color:#111;font-size:23px;font-weight:1000;letter-spacing:.17em;text-align:center;user-select:text}.statusBox{min-height:25px;margin-top:9px;font-weight:900;color:#8ddcff}.backProto{margin-top:10px;border:0;background:transparent;color:#b8d4e0;text-decoration:underline}.small-explain{font-size:12px!important;color:#b9ced8!important;margin:7px auto!important}.scanButton{margin-top:8px;border:1px dashed #ffffff66;background:#ffffff0b;color:#cde9f4;border-radius:12px;padding:9px 13px;font-weight:800}
@@ -27,7 +27,7 @@ if(teamId==='salvida_a'&&state==='kick')return ground-1;
 return ground
 }
 let running=false,last=0,phase='ready',role='kick',aim=1,score=[0,0],shots=[[],[]],round=0,sudden=false,message='',messageLife=0,runnerX=690,bar=1,barSpeed=.92,ball={x:510,y:430,vx:0,vy:0},keeper={lane:1,target:1,jump:0,jumpAtX:null,timing:0,aiDelay:0,recovery:0},shotResult=null,wait=0,pressedA=false,keys=new Set();
-let onlineMode=false,onlineSide=null,onlineStartTimer=null,onlineMatchId=null,onlineRemoteApplying=false;
+let onlineMode=false,onlineSide=null,onlineStartTimer=null,onlineMatchId=null,onlineRemoteApplying=false,onlineTurn=0,onlineFinished=false,lastOnlineResultSeq=0,lastOnlineTurnSeq=0;
 function sendOnlineInput(type,payload={}){if(onlineMode&&window.pkFirebase)window.pkFirebase.sendInput(type,payload).catch(()=>{})}
 function applyRemoteOnlineInput(data){
  if(!onlineMode||!data||data.matchId!==onlineMatchId)return;
@@ -49,6 +49,27 @@ function applyRemoteOnlineInput(data){
  }finally{onlineRemoteApplying=false}
 }
 window.addEventListener('pk-online-input',e=>applyRemoteOnlineInput(e.detail));
+function onlineKickerSide(turn=onlineTurn){return turn%2===0?'host':'guest'}
+function setOnlineRoleForTurn(turn=onlineTurn){
+ onlineTurn=turn;role=onlineSide===onlineKickerSide(turn)?'kick':'keep';round=Math.floor(turn/2);sudden=round>=5;setupTurn();
+ if(role==='keep'){phase='keeperWait';message='相手の助走を待っています…'}else{phase='ready';message='Aで助走開始'}messageLife=99
+}
+function applyOnlineResult(data){
+ if(!onlineMode||!data||data.matchId!==onlineMatchId||data.seq<=lastOnlineResultSeq)return;
+ lastOnlineResultSeq=data.seq;const hostLocal=onlineSide==='host';
+ score=hostLocal?[data.hostScore,data.guestScore]:[data.guestScore,data.hostScore];
+ shots=hostLocal?[data.hostShots||[],data.guestShots||[]]:[data.guestShots||[],data.hostShots||[]];
+ if(!shotResult)shotResult={quality:data.quality,lane:data.lane,goal:false,saved:false,cleared:false};
+ shotResult.goal=!!data.goal;shotResult.saved=!!data.saved;
+ if(data.saved){message='SAVE!';ball.vx=0;ball.vy=0}else if(data.goal){message='GOAL!'}else{message='枠外！'}
+ phase='resolved';messageLife=1.3;wait=data.goal?1.65:1.35;onlineFinished=!!data.finished
+}
+function applyOnlineTurn(data){
+ if(!onlineMode||!data||data.matchId!==onlineMatchId||data.seq<=lastOnlineTurnSeq)return;
+ lastOnlineTurnSeq=data.seq;if(data.finished){onlineFinished=true;finishOnline(data.winner);return}setOnlineRoleForTurn(data.turn)
+}
+window.addEventListener('pk-online-result',e=>applyOnlineResult(e.detail));
+window.addEventListener('pk-online-turn',e=>applyOnlineTurn(e.detail));
 function selectPrototypeTab(which){const creating=which==='create';createTab.classList.toggle('active',creating);joinTab.classList.toggle('active',!creating);createRoom.classList.toggle('active',creating);joinRoom.classList.toggle('active',!creating)}
 function roomJoinUrl(code){const base=location.origin+location.pathname;return base+'?room='+encodeURIComponent(code)+'&mode=firebase'}
 function setRoomQr(code){roomQr.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data='+encodeURIComponent(roomJoinUrl(code))}
@@ -110,17 +131,9 @@ window.addEventListener('pk-match-start',e=>{
  onlineStartTimer=setTimeout(()=>startOnlinePreview(d),delay);
 });
 function startOnlinePreview(d){
- const room=d.room,side=d.role;
- onlineMode=true;onlineSide=side;onlineMatchId=room.match.id;
- selectedTeam=side==='host'?room.hostTeam:room.guestTeam;
- cpuTeam=side==='host'?room.guestTeam:room.hostTeam;
- score=[0,0];shots=[[],[]];round=0;sudden=false;
- role=side==='host'?'kick':'keep';
- menu.style.display='none';touchUi.hidden=false;
- setupTurn();
- if(side==='guest'){role='keep';phase='keeperWait';message='相手の助走を待っています…'}
- else{role='kick';phase='ready';message='Aで助走開始'}
- running=true;messageLife=99;last=performance.now();requestAnimationFrame(loop)
+ const room=d.room,side=d.role;onlineMode=true;onlineSide=side;onlineMatchId=room.match.id;onlineTurn=0;onlineFinished=false;lastOnlineResultSeq=0;lastOnlineTurnSeq=0;
+ selectedTeam=side==='host'?room.hostTeam:room.guestTeam;cpuTeam=side==='host'?room.guestTeam:room.hostTeam;score=[0,0];shots=[[],[]];round=0;sudden=false;
+ menu.style.display='none';touchUi.hidden=false;setOnlineRoleForTurn(0);running=true;messageLife=99;last=performance.now();requestAnimationFrame(loop)
 }
 function start(){if(!assetsReady)return;onlineMode=false;onlineSide=null;cpuTeam=(selectedTeam+1+Math.floor(Math.random()*4))%5;score=[0,0];shots=[[],[]];round=0;sudden=false;role='kick';menu.style.display='none';touchUi.hidden=false;setupTurn();running=true;last=performance.now();requestAnimationFrame(loop)}
 function setupTurn(){phase='ready';aim=1;runnerX=700;bar=1;ball={x:510,y:430,vx:0,vy:0};keeper={lane:1,target:1,jump:0,jumpAtX:null,timing:0,aiDelay:0,recovery:0};shotResult=null;wait=0;message=role==='kick'?'Aで助走開始':'高さを選び、飛んでくる瞬間にA';messageLife=99}
@@ -188,39 +201,17 @@ messageLife=1.2
 }
 function beginCpuRun(){phase='cpuRun';runnerX=700;wait=.72+Math.random()*.38;message='相手が助走！';messageLife=99}function cpuShoot(){const lane=Math.floor(Math.random()*3),quality=Math.random()<.25?3:Math.random()<.7?2:1;shotResult={quality,lane,goal:false,saved:false,cleared:false};ball.vx=-[260,430,620,820][quality];ball.vy=(laneY(lane)-ball.y)*1.45;phase='keeperFlight';message='マーカー付近でA！';messageLife=99}
 function resolveShot(){
-if(phase==='resolved'||phase==='cleared')return;
-let goal=false;
-const lane=shotResult.lane;
-if(lane>=0){
- const q=Math.max(0,shotResult.quality);
- const need=[.34,.42,.56,.68][q];
- const playerKeeper=(role==='keep');
- const timingOK=playerKeeper?keeper.timing>0:keeper.timing>=need;
- const saved=keeper.jump>0&&keeper.target===lane&&timingOK;
- goal=!saved;
- shotResult.saved=saved;
- shotResult.goal=goal;
- if(saved){
-  message='SAVE!';
-  ball.vx=0;
-  ball.vy=0
- }else{
-  message='GOAL!'
- }
-}else{
- message='枠外！';
- shotResult.goal=false;
- shotResult.saved=false
+if(phase==='resolved'||phase==='cleared'||phase==='onlineAwaitResult')return;
+if(onlineMode&&onlineSide!=='host'){phase='onlineAwaitResult';ball.x=190;ball.vx=0;ball.vy=0;message='判定を同期中…';messageLife=99;return}
+let goal=false;const lane=shotResult.lane;
+if(lane>=0){const q=Math.max(0,shotResult.quality),need=[.34,.42,.56,.68][q],playerKeeper=(role==='keep'),timingOK=playerKeeper?keeper.timing>0:keeper.timing>=need;const saved=keeper.jump>0&&keeper.target===lane&&timingOK;goal=!saved;shotResult.saved=saved;shotResult.goal=goal;if(saved){message='SAVE!';ball.vx=0;ball.vy=0}else message='GOAL!'}
+else{message='枠外！';shotResult.goal=false;shotResult.saved=false}
+const side=role==='kick'?0:1;if(goal)score[side]++;shots[side].push(goal);phase='resolved';messageLife=1.3;wait=goal?1.65:1.35;
+if(onlineMode){const equalShots=shots[0].length===shots[1].length;const finished=equalShots&&shots[0].length>=5&&score[0]!==score[1];onlineFinished=finished;const winner=finished?(score[0]>score[1]?'host':'guest'):null;window.pkFirebase?.publishResult({turn:onlineTurn,goal:!!goal,saved:!!shotResult.saved,lane:shotResult.lane,quality:shotResult.quality,hostScore:score[0],guestScore:score[1],hostShots:shots[0],guestShots:shots[1],finished,winner}).catch(()=>{})}
 }
-const side=role==='kick'?0:1;
-if(goal)score[side]++;
-shots[side].push(goal);
-phase='resolved';
-messageLife=1.3;
-wait=goal?1.65:1.35
-}
-function nextTurn(){if(onlineMode){phase='onlinePreview';message='入力同期確認完了！ 結果・次ターン同期は次版で追加';messageLife=99;return}if(role==='kick'){role='keep';setupTurn();phase='keeperWait';wait=.8;message='キーパーの番';messageLife=.7}else{role='kick';round++;const normalDone=round>=5;if(normalDone){if(score[0]!==score[1])return finish();sudden=true;if(round>5&&shots[0][shots[0].length-1]!==shots[1][shots[1].length-1])return finish()}setupTurn()}}
+function nextTurn(){if(onlineMode){if(onlineFinished){finishOnline(score[0]>score[1]?onlineSide:(onlineSide==='host'?'guest':'host'));return}if(onlineSide==='host')window.pkFirebase?.advanceTurn(onlineTurn+1).catch(()=>{});phase='onlineAwaitTurn';message='次のキックを同期中…';messageLife=99;return}if(role==='kick'){role='keep';setupTurn();phase='keeperWait';wait=.8;message='キーパーの番';messageLife=.7}else{role='kick';round++;const normalDone=round>=5;if(normalDone){if(score[0]!==score[1])return finish();sudden=true;if(round>5&&shots[0][shots[0].length-1]!==shots[1][shots[1].length-1])return finish()}setupTurn()}}
 function finish(){running=false;touchUi.hidden=true;const win=score[0]>score[1];menuMessage.textContent=win?`勝利！ ${score[0]} - ${score[1]}`:`敗北… ${score[0]} - ${score[1]}　再挑戦！`;startButton.textContent='もう一度';menu.style.display='grid'}
+function finishOnline(winner){running=false;touchUi.hidden=true;const win=winner===onlineSide;menuMessage.textContent=win?`通信対戦 勝利！ ${score[0]} - ${score[1]}`:`通信対戦 敗北… ${score[0]} - ${score[1]}`;startButton.textContent='CPU戦を遊ぶ';menu.style.display='grid'}
 function update(dt){
 messageLife=Math.max(0,messageLife-dt);
 if(role==='kick'&&phase==='run'){
@@ -324,7 +315,7 @@ const firebaseConfig = {
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getDatabase(app);
-let roomCode=null, role=null, stopWatch=null, roomRef=null,lastMatchEvent=null,lastRemoteSeq=0;
+let roomCode=null, role=null, stopWatch=null, roomRef=null,lastMatchEvent=null,lastRemoteSeq=0,lastResultSeq=0,lastTurnSeq=0;
 const authReady=signInAnonymously(auth);
 
 function emitRoom(room){
@@ -332,6 +323,8 @@ function emitRoom(room){
  if(room?.status==='starting'&&room.match&&room.match.id!==lastMatchEvent){lastMatchEvent=room.match.id;window.dispatchEvent(new CustomEvent('pk-match-start',{detail:{room,role}}))}
  const remoteKey=role==='host'?'guest':'host',input=room?.inputs?.[remoteKey];
  if(input&&input.seq>lastRemoteSeq){lastRemoteSeq=input.seq;window.dispatchEvent(new CustomEvent('pk-online-input',{detail:input}))}
+ const result=room?.result;if(result&&result.seq>lastResultSeq){lastResultSeq=result.seq;window.dispatchEvent(new CustomEvent('pk-online-result',{detail:result}))}
+ const turnState=room?.turnState;if(turnState&&turnState.seq>lastTurnSeq){lastTurnSeq=turnState.seq;window.dispatchEvent(new CustomEvent('pk-online-turn',{detail:turnState}))}
 }
 async function leaveRoom(){
  if(stopWatch){stopWatch();stopWatch=null}
@@ -371,7 +364,7 @@ async function beginMatch(){
  const room=snap.val();if(!room.guestUid)return;
  if(room.status==='starting'&&room.match)return;
  const match={id:String(Date.now())+'-'+Math.random().toString(36).slice(2,8),startAt:Date.now()+4000,firstKicker:'host'};
- await update(roomRef,{status:'starting',match,updatedAt:serverTimestamp()});
+ await update(roomRef,{status:'starting',match,turnState:{turn:0,matchId:match.id,seq:Date.now(),finished:false},result:null,inputs:null,updatedAt:serverTimestamp()});
 }
 async function joinRoom(code,team){
  await authReady;await leaveRoom();
@@ -392,7 +385,9 @@ async function sendInput(type,payload={}){
  const data={type,...payload,seq,matchId:lastMatchEvent,from:role,sentAt:serverTimestamp()};
  await set(ref(db,'rooms/'+roomCode+'/inputs/'+role),data)
 }
-window.pkFirebase={createRoom,joinRoom,leaveRoom,beginMatch,sendInput,authReady};
+async function publishResult(payload){await authReady;if(role!=='host'||!roomRef)throw new Error('ホストだけが結果を確定できます');const seq=Date.now()*1000+Math.floor(Math.random()*1000);await set(ref(db,'rooms/'+roomCode+'/result'),{...payload,seq,matchId:lastMatchEvent,sentAt:serverTimestamp()})}
+async function advanceTurn(turn){await authReady;if(role!=='host'||!roomRef)throw new Error('ホストだけがターンを進められます');const seq=Date.now()*1000+Math.floor(Math.random()*1000);await update(roomRef,{turnState:{turn,seq,matchId:lastMatchEvent,finished:false},result:null,inputs:null,updatedAt:serverTimestamp()})}
+window.pkFirebase={createRoom,joinRoom,leaveRoom,beginMatch,sendInput,publishResult,advanceTurn,authReady};
 window.dispatchEvent(new Event('pk-firebase-ready'));
 </script>
 
